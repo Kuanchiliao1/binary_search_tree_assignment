@@ -91,10 +91,61 @@ const Tree = (array) => {
     // return when value is not same AND node === null
   }
 
+  const deleteNode = (value, node = root, parent = root) => {
+    if (node === null) return
+    const rightNode = node.getRight()
+    const leftNode = node.getLeft()
+    
+    if (value === node.getData()) {
+      console.log('found match!!', node.getData())
+      console.log(parent.getData())
+      parent.getData() > value
+        ? parent.setLeft(null)
+        : parent.setRight(null)
+      
+      //let childNum = 0
+      //for (let i = 0; i < 3; i++) {
+        
+      //}
+      
+      return
+    }
+    
+    deleteNode(value, node.getRight(), node)
+    deleteNode(value, node.getLeft(), node)
+
+    
+    // if value found
+      // check how many children
+        // Implementation...
+          // node.leftChild = left, node.rightChild = right
+          // if (left && right) { ... } (both)
+          // if (left || right) { ... } (one)
+          // else { ... }
+        // if zero => delete
+          // save parent element
+          // 
+        // if one
+          // save parent element
+          // let direction = direction of deleted element relative to parent
+          // let child = child element of to be deleted element
+          // link parent to child of deleted element in the same direction
+        // if two
+          // save parent element
+          // let direction = direction of deleted child relative to parent
+          // let rightChild = immediate right child of the deleted element
+          // let leftmostChild = keep iterating down until I find the
+          // leftmost leaf of that right child
+          // link parent to leftmostChild
+    // if value not found
+      // return "value not found!"
+  }
+
   return {
     root,
     sortedArray,
-    insert
+    insert,
+    deleteNode
   }
 }
 
@@ -113,14 +164,15 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const tree = Tree(
-  [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 346, 234, 523]
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 )
 
 prettyPrint(tree.root)
-console.log(tree.insert(2))
-console.log(tree.insert(6))
-console.log(tree.insert(6))
 console.log(tree.insert(10))
 console.log(tree.insert(11))
-
 prettyPrint(tree.root)
+
+console.log(tree.deleteNode(11))
+prettyPrint(tree.root)
+
+
