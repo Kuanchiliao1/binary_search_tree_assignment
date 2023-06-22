@@ -98,10 +98,23 @@ const Tree = (array) => {
     
     if (value === node.getData()) {
       console.log('found match!!', node.getData())
-      console.log(parent.getData())
-      parent.getData() > value
+      console.log('parent: ', parent.getData())
+
+      let childCount = 0
+      if (rightNode && leftNode) {
+        childCount = 2
+      } else if (rightNode || leftNode) {
+        childCount = 1
+        const child = rightNode || leftNode
+        parent.getData() > value
+          ? parent.setLeft(child)
+          : parent.setRight(child)
+      } else {
+        childCount = 0
+        parent.getData() > value
         ? parent.setLeft(null)
         : parent.setRight(null)
+      }
       
       //let childNum = 0
       //for (let i = 0; i < 3; i++) {
@@ -172,7 +185,7 @@ console.log(tree.insert(10))
 console.log(tree.insert(11))
 prettyPrint(tree.root)
 
-console.log(tree.deleteNode(11))
+console.log(tree.deleteNode(3))
 prettyPrint(tree.root)
 
 
