@@ -97,29 +97,57 @@ const Tree = (array) => {
     const leftNode = node.getLeft()
     
     if (value === node.getData()) {
+      
       console.log('found match!!', node.getData())
       console.log('parent: ', parent.getData())
 
-      let childCount = 0
       if (rightNode && leftNode) {
-        childCount = 2
+        // If there are two childen
+        let leftmostChild = rightNode
+        while (leftmostChild.getLeft() !== null) {
+          leftmostChild = leftmostChild.getLeft()
+        }
+        
+        const rightChildofLeftmostChild = leftmostChild.getRight() || null
+        if (leftmostChild.getData() === rightNode.getData()) {
+          leftmostChild.setLeft(leftNode)
+          console.log('testing match')
+        } else {
+          rightNode.setLeft(rightChildofLeftmostChild)
+          leftmostChild.setRight(rightNode)
+          leftmostChild.setLeft(leftNode)
+        }
+
+        if (node === root) {
+          console.log("node is equal to root!")
+          node = leftmostChild
+        } else {
+          parent.getData() > value
+          ? parent.setLeft(leftmostChild)
+          : parent.setRight(leftmostChild)
+          console.log('leftmost: ', leftmostChild.getData())
+        }
+        
+        
+        if (rightChildofLeftmostChild) {
+          console.log('rcolmc', rightChildofLeftmostChild.getData())
+        } else {
+          console.log('rcolmc', rightChildofLeftmostChild)
+        }
+        
       } else if (rightNode || leftNode) {
-        childCount = 1
+        // If there is one child
         const child = rightNode || leftNode
         parent.getData() > value
           ? parent.setLeft(child)
           : parent.setRight(child)
       } else {
+      	// If there is no child
         childCount = 0
         parent.getData() > value
-        ? parent.setLeft(null)
-        : parent.setRight(null)
+          ? parent.setLeft(null)
+          : parent.setRight(null)
       }
-      
-      //let childNum = 0
-      //for (let i = 0; i < 3; i++) {
-        
-      //}
       
       return
     }
@@ -127,7 +155,7 @@ const Tree = (array) => {
     deleteNode(value, node.getRight(), node)
     deleteNode(value, node.getLeft(), node)
 
-    
+    // Pseudocode
     // if value found
       // check how many children
         // Implementation...
@@ -177,15 +205,11 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const tree = Tree(
-  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 )
 
 prettyPrint(tree.root)
-console.log(tree.insert(10))
-console.log(tree.insert(11))
-prettyPrint(tree.root)
-
-console.log(tree.deleteNode(3))
+tree.deleteNode(12)
 prettyPrint(tree.root)
 
 
