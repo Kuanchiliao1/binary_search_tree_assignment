@@ -33,8 +33,9 @@ const Node = (data) => {
 
 const Tree = (array) => {
   let sortedArray = [...new Set(array)].sort((a, b) => a - b)
+  let root = buildTree(sortedArray)
 
-  const buildTree = (array) => {
+  function buildTree(array) {
     if (array.length === 0) return null
     let start = 0
     let end = array.length - 1
@@ -60,9 +61,40 @@ const Tree = (array) => {
     return node
   }
 
+  const insert = (value, node = root) => {
+    // if value is the same as root value,
+    // return "value already exists!"    
+    if (node.getData() === value) {
+      return "Value already exists!"
+    }
+
+    if (value < node.getData()) {
+      if (node.getLeft()) {
+        node = insert(value, node.getLeft())  
+      } else {
+        node.setLeft(Node(value))
+        return
+      }
+    } else {
+      if (node.getRight()) {
+        node = insert(value, node.getRight())      
+      } else {
+        node.setRight(Node(value))
+        return
+      }
+    }
+    // if value is not the same,
+    // set root value to the correct direction and call again
+
+    return node
+    // base case
+    // return when value is not same AND node === null
+  }
+
   return {
-    root: buildTree(sortedArray),
-    sortedArray
+    root,
+    sortedArray,
+    insert
   }
 }
 
@@ -80,6 +112,15 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-prettyPrint(Tree(
+const tree = Tree(
   [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 346, 234, 523]
-).root)
+)
+
+prettyPrint(tree.root)
+console.log(tree.insert(2))
+console.log(tree.insert(6))
+console.log(tree.insert(6))
+console.log(tree.insert(10))
+console.log(tree.insert(11))
+
+prettyPrint(tree.root)
