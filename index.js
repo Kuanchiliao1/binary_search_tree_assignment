@@ -34,22 +34,38 @@ const Node = (data) => {
 const Tree = (array) => {
   let sortedArray = [...new Set(array)].sort((a, b) => a - b)
 
-  const buildTree = () => {
-    const node = Node(3)
-    node.setLeft(Node(2))
-    node.setRight(Node(399))
+  const buildTree = (array) => {
+    if (array.length === 0) return null
+    let start = 0
+    let end = array.length - 1
+    let mid = Math.floor((start + end) / 2)
+
+    const node = Node(array[mid])
+
+    let leftArr = array.slice(start, mid)
+    let rightArr = array.slice(mid + 1)
+    
+    console.log({rightArr, leftArr, mid: array[mid]})
+    
+    node.setLeft(buildTree(leftArr))
+    node.setRight(buildTree(rightArr))
+    
+    // find start
+    // find end
+    // find the midpoint
+    // set the root to the midpoint
+    // set the left 
+    // base case: start > end
+    
     return node
   }
 
   return {
-    root: buildTree(),
+    root: buildTree(sortedArray),
     sortedArray
   }
 }
 
-console.log(Tree(
-  [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-).root)
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
   if (node === null) {
@@ -65,5 +81,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 prettyPrint(Tree(
-  [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
+  [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 346, 234, 523]
 ).root)
