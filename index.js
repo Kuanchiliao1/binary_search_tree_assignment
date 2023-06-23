@@ -38,25 +38,15 @@ const Tree = (array) => {
   function buildTree(array) {
     if (array.length === 0) return null
     let start = 0
-    let end = array.length - 1
-    let mid = Math.floor((start + end) / 2)
+    let mid = Math.floor((start + array.length - 1) / 2)
 
     const node = Node(array[mid])
 
-    let leftArr = array.slice(start, mid)
-    let rightArr = array.slice(mid + 1)
-    
-    console.log({rightArr, leftArr, mid: array[mid]})
+    const leftArr = array.slice(start, mid)
+    const rightArr = array.slice(mid + 1)
     
     node.setLeft(buildTree(leftArr))
     node.setRight(buildTree(rightArr))
-    
-    // find start
-    // find end
-    // find the midpoint
-    // set the root to the midpoint
-    // set the left 
-    // base case: start > end
     
     return node
   }
