@@ -91,6 +91,19 @@ const Tree = (array) => {
     // return when value is not same AND node === null
   }
 
+  const findNode = (value, node = root) => {
+    if (node === null) return
+    if (node.getData() === value) {
+      return node
+    }
+
+    let found = findNode(value, node.getLeft()) || findNode(value, node.getRight())
+
+    return found
+      ? found
+      : "No matches found!"
+  }
+
   const deleteNode = (value, node = root, parent = root) => {
     if (node === null) return
     const rightNode = node.getRight()
@@ -99,7 +112,7 @@ const Tree = (array) => {
     if (value === node.getData()) {
       
       console.log('found match!!', node.getData())
-      console.log('parent: ', parent.getData())
+      console.log('parent: ', node.getData())
 
       if (rightNode && leftNode) {
         // If there are two childen
@@ -186,7 +199,8 @@ const Tree = (array) => {
     root,
     sortedArray,
     insert,
-    deleteNode
+    deleteNode,
+    findNode
   }
 }
 
@@ -209,7 +223,7 @@ const tree = Tree(
 )
 
 prettyPrint(tree.root)
-tree.deleteNode(12)
+tree.deleteNode(21)
 prettyPrint(tree.root)
-
+console.log(tree.findNode(3))
 
