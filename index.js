@@ -185,12 +185,53 @@ const Tree = (array) => {
       // return "value not found!"
   }
 
+  const levelOrder = (node = root) => {
+    const queue = []
+    const array = []
+    queue.push(root)
+
+    while (queue.length >= 1) {
+      const currentNode = queue.shift()
+      array.push(currentNode.getData())
+      
+      const left = currentNode.getLeft()
+      const right = currentNode.getRight()
+      
+      if (left) {
+        queue.push(left)
+      }
+      if (right) {
+        queue.push(right)
+      }
+    }
+
+    return array
+    // Push root into the queue
+    // if root has children
+      // push those into the queue(left then right)
+      // call the function again
+    // base case root === null
+      // return 
+    // ex: root is 12
+      // queue = [12]
+      // 12 gets shifted from array and children are added
+      // arr = [12]
+      // queue = [6, 18]
+      // 6 gets shifted
+      // arr = [12, 6]
+      // queue = [18, 3, 9]
+      // 18 gets shifted
+      // arr = [12, 6, 18]
+      // queue = [3, 9, 15, 22]
+  }
+
   return {
     root,
     sortedArray,
     insert,
     deleteNode,
-    findNode
+    findNode,
+    levelOrder
   }
 }
 
@@ -215,5 +256,5 @@ const tree = Tree(
 prettyPrint(tree.root)
 tree.deleteNode(21)
 prettyPrint(tree.root)
-console.log(tree.findNode(3))
-
+console.log(tree.findNode(3), tree.findNode(3).getData())
+console.log(tree.levelOrder())
